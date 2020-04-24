@@ -1,15 +1,18 @@
-# PyBearBull
-
+PyBearBull
+================================================================================
 A python implementation of the ManBearBull project.
 
-## ManBearBull Project
-
+ManBearBull Project
+--------------------------------------------------------------------------------
 The aim of the ManBearBull project is to provide implementations of common
 tools and functionalities useful to financial instrument trading.  This includes
 technical analysis tools, trade history tools, and trading tools.
 
-### Technical Analysis Tools
+Technical Analysis Tools
+- - - - - - - - - - - - -
 
-### Trade History Tools
+Trade History Tools
+- - - - - - - - - - -
 
-### Trading Tools
+Trading Tools
+- - - - - - - -
