@@ -1,0 +1,138 @@
+Project Structure
+------------------
+pybearbull/
+|
++- README
+|
++- LICENSE
+|
++- .gitignore
+|
++- setup.py
+|
++- requirements.txt
+|
++- test_requirements.txt
+|
++- Makefile
+|
++- pybearbull.py
+|
++- pybearbull_venv/     (needs to be set up by user with virtualenv)
+|  |
+|  +-
+|
++- docs/
+|  |
+|  +-
+|
++- pybearbull/
+|  |
+|  +- __init__.py
+|  |
+|  +- __main__.py
+|  |
+|  +- gui/
+|  |  |
+|  |  +- __init__.py
+|  |  |
+|  |  +- 
+|  |  
+|  +- core/
+|  |  |
+|  |  +- __init__.py
+|  |  |
+|  |  +- 
+|  |
+|  +- backend/
+|  |  |
+|  |  +- __init__.py
+|  |  |
+|  |  +- 
+|  |
+|  +-
+|
++- tests/
+   |
+   +- unit/
+   |  |
+   |  +-
+   |
+   +- integration/
+      |
+      +-
+
+Branching Model
+----------------
+- master (infinite lifetime) [production ready state]
+- dev (infinite lifetime) [latest delivered development changes for next release]
+- hotfixes
+        - must branch off of master
+        - must merge back into (dev|release) and master
+        - name: hotfix-*
+        - fix a critical bug; then bump versions and whatnot like a release
+        - merged into master and tagged for easier reference
+        - if there is a release branch, hotfixes are merged into master and release
+- release branches
+        - must branch off of dev
+        - must merge back into dev and master
+        - name: release-*
+        - branch off when dev has enough changes for a release
+        - final touches are done before being made a release
+                - version bumping
+                - cleaning
+                - bugfixes
+        - merged into master and tagged for easier reference
+- feature branches [used to develop new features for upcoming or distant releases]
+        - must branch off of dev
+        - must mege back into dev
+        - name: anything except master, dev, release-*, hotfix-*
+        - typically exist in developer repos only, not remote
+
+master  hotfixes  releases  dev  features
+  |                          |
+  0 0.0.1                    O
+  |\                         |
+  | *----------------------. |
+  |  \                      \|
+  |   *--.                   O------.
+  |       \                  |\      \
+  |        O                 O *--.   O
+  |       / \                |     \  |
+  | .----*   *-------------. O      O O
+  |/                        \|\     | |
+  O 0.0.2                    O *--. O O
+  |\                         |     X  |
+  | *----.                   O .--* \ O
+  |       \                  |/      \|
+  |        O                 O        O
+  |        |                /|       /
+  |        O           .---* | .----*
+  |        |          /      |/
+  |        O         O       O
+  |       / \        |\      |\
+  | .----*   *-----. O *---. O *-.
+  |/                \|      \|    \
+  O 0.0.3            O       O     O
+  |                  |       |     |
+  |                  O       O     O
+  |                 / \      |     |
+  | .--------------*   *---. O     O
+  |/                        \|     |
+  O 1.0.0                    O     O
+  |                         /|    /
+  |                    .---* | .-*
+  |                   O      |/
+  |                  / \     O
+  | .---------------*   *--. |
+  |/                        \|
+  O 1.1.0                    O
+  |                          |
+
+Versioning Model
+-----------------
+- Major is incremented when you make incompatible API changes
+- Minor is incremented when you add functionality in a backwards compatible manner
+- Patch is incremented when you make backward compatible bug fixes
+- additional labels for pre-release and build metadata can be used
+        - alpha, beta, release candidate, etc
