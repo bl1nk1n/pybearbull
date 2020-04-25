@@ -1,5 +1,5 @@
 Project Structure
-------------------
+--------------------------------------------------------------------------------
 pybearbull/
 |
 +- README
@@ -63,16 +63,17 @@ pybearbull/
       +-
 
 Branching Model
-----------------
-- master (infinite lifetime) [production ready state]
-- dev (infinite lifetime) [latest delivered development changes for next release]
+--------------------------------------------------------------------------------
+- master
+        - infinite lifetime; production ready state
+- dev
+        - infinite lifetime; latest development changes for next release
 - hotfixes
         - must branch off of master
         - must merge back into (dev|release) and master
         - name: hotfix-*
         - fix a critical bug; then bump versions and whatnot like a release
         - merged into master and tagged for easier reference
-        - if there is a release branch, hotfixes are merged into master and release
 - release branches
         - must branch off of dev
         - must merge back into dev and master
@@ -83,7 +84,8 @@ Branching Model
                 - cleaning
                 - bugfixes
         - merged into master and tagged for easier reference
-- feature branches [used to develop new features for upcoming or distant releases]
+- feature branches
+        - used to develop new features for upcoming or distant releases
         - must branch off of dev
         - must mege back into dev
         - name: anything except master, dev, release-*, hotfix-*
@@ -130,9 +132,9 @@ master  hotfixes  releases  dev  features
   |                          |
 
 Versioning Model
------------------
-- Major is incremented when you make incompatible API changes
-- Minor is incremented when you add functionality in a backwards compatible manner
-- Patch is incremented when you make backward compatible bug fixes
+--------------------------------------------------------------------------------
+- Major incremented when you make incompatible API changes
+- Minor incremented when you add functionality that isn't backwards compatible
+- Patch incremented when you make backward compatible bug fixes
 - additional labels for pre-release and build metadata can be used
         - alpha, beta, release candidate, etc
