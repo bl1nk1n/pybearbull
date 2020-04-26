@@ -1,2 +1,3 @@
-*.pyc
-notes*
+**/*.pyc
+notes**
+pybearbull_venv/**
