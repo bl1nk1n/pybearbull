@@ -6,11 +6,15 @@ on:
       - 'docs/**'
       - 'LICENSE.txt'
       - 'README.md'
+      - '.gitlab-ci.yml'
+      - 'bitbucket-pipelines.yml'
   pull_request:
     paths-ignore:
       - 'docs/**'
       - 'LICENSE.txt'
       - 'README.md'
+      - '.gitlab-ci.yml'
+      - 'bitbucket-pipelines.yml'
 
 jobs:
   build:

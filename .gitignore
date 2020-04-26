@@ -1,3 +1,4 @@
 **/*.pyc
 notes**
 pybearbull_venv/**
+**/.coverage
