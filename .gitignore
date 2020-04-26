@@ -2,3 +2,4 @@
 notes**
 pybearbull_venv/**
 **/.coverage
+**/__pycache__/**
