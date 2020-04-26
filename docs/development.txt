@@ -12,8 +12,6 @@ pybearbull/
 |
 +- requirements.txt
 |
-+- test_requirements.txt
-|
 +- Makefile
 |
 +- pybearbull.py
