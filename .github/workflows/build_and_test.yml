@@ -76,5 +76,5 @@ jobs:
 
     - name: Linting with PyTest
       run: |
-        pip install pytest-flake
+        pip install pytest-flakes
 
