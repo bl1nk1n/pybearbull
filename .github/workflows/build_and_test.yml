@@ -19,9 +19,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-       os: ubuntu-latest #macos-latest, windows-latest
-       python-version: 3.8 #2.7, 3.6, 3.7, pypy2, pypy3
-       architecture: x64 #x86
+       os: [ubuntu-latest] #macos-latest, windows-latest
+       python-version: [3.8] #2.7, 3.6, 3.7, pypy2, pypy3
+       architecture: [x64] #x86
        #   exclude:
        #  - os: macos-latest
        #    python-version: 3.6
