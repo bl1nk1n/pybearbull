@@ -41,13 +41,14 @@ Currently this functionality does not exist.
 
 ### Cloning PyBearBull From Git
 To clone this project via SSH, use one of the following:
-`git clone git@github.com:bl1nk1n/pybearbull.git`
-`git clone git@bitbucket.org:SamuelHentschel/pybearbull.git`
-`git clone git@gitlab.com:bl1nk1n/pybearbull.git`
+* `git clone git@github.com:bl1nk1n/pybearbull.git`
+* `git clone git@bitbucket.org:SamuelHentschel/pybearbull.git`
+* `git clone git@gitlab.com:bl1nk1n/pybearbull.git`
+
 To clone this project via HTTPS, use one of the following:
-`git clone https://github.com/bl1nk1n/pybearbull.git`
-`git clone https://bl1nk1n@bitbucket.org/SamuelHentschel/pybearbull.git`
-`git clone https://gitlab.com/bl1nk1n/pybearbull.git`
+* `git clone https://github.com/bl1nk1n/pybearbull.git`
+* `git clone https://bl1nk1n@bitbucket.org/SamuelHentschel/pybearbull.git`
+* `git clone https://gitlab.com/bl1nk1n/pybearbull.git`
 
 ### Virtual Environment
 To make sure you do not install any packages that might conflict with your
