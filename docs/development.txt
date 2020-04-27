@@ -136,3 +136,78 @@ Versioning Model
 - Patch incremented when you make backward compatible bug fixes
 - additional labels for pre-release and build metadata can be used
         - alpha, beta, release candidate, etc
+
+Testing
+--------------------------------------------------------------------------------
+- every function needs to be unit tested
+- every section of functionality needs to be integration tested
+- all the tests should cover all cases of a function
+- only the license header and module header need to be included comment-wise
+- the testing directories should mirror the source directories
+
+Documentation
+--------------------------------------------------------------------------------
+- the docs directories should mirror the source directories and each file should
+  include a prose style description of each class, function, etc based on the
+  docstrings
+- All files must include the license header:
+
+################################################################################
+# This file is part of the ManBearBull/PyBearBull project.                     #
+# Copyright (C) 2020 Sam Hentschel (bl1nk1n) and the PyBearBull Contributors   #
+#                                                                              #
+# This program is free software: you can redistribute it and/or modify it      #
+# under the terms of the GNU Affero General Public License as published by the #
+# Free Software Foundation, either version 3 of the License, or (at your       #
+# option) any later version.                                                   #
+#                                                                              #
+# This program is distributed in the hope that it will be useful, but WITHOUT  #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or        #
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License #
+# for more details.                                                            #
+#                                                                              #
+# You should have received a copy of the GNU Affero General Public License     #
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.       #
+################################################################################
+
+- All source files must include docstrings for modules and functions:
+        - modules
+        """
+        String that describes what the module does.
+
+        Classes:
+
+                A
+                B
+                C
+
+        Functions:
+
+                a(num, str) -> object
+                b() -> string
+                c(str)
+
+        Variables:
+
+                a
+                b
+                c
+        """
+
+        - functions:
+        def func(a, b):
+                """
+                String that describes what the function does.
+
+                Parameters:
+                        a (int): description of variable a and its conditions
+
+                        b (str): description of variable b and its conditions
+
+                Returns:
+                        foo (object): description of the variable returned and
+                                     description of conditions that have to be
+                                     met
+                        None:         description of conditions that have to be
+                                      met
+                """

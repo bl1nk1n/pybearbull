@@ -1,0 +1,39 @@
+################################################################################
+# This file is part of the ManBearBull/PyBearBull project.                     #
+# Copyright (C) 2020 Sam Hentschel (bl1nk1n) and the PyBearBull Contributors   #
+#                                                                              #
+# This program is free software: you can redistribute it and/or modify it      #
+# under the terms of the GNU Affero General Public License as published by the #
+# Free Software Foundation, either version 3 of the License, or (at your       #
+# option) any later version.                                                   #
+#                                                                              #
+# This program is distributed in the hope that it will be useful, but WITHOUT  #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or        #
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License #
+# for more details.                                                            #
+#                                                                              #
+# You should have received a copy of the GNU Affero General Public License     #
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.       #
+################################################################################
+
+pybearbull/core/moving_average.py
+================================================================================
+This module contains functions that calculate moving averages of data (and
+therefore averages of data as well).  
+
+Functions
+--------------------------------------------------------------------------------
+simple_average([number]) -> number|None
+        Calculates the simple average of the numerical data array given in the 
+        argument and returns it if possible.  If the data array given is empty, 
+        then this function returns None.
+
+simple_moving_average({key:number}, number) -> {key:number}|None
+        Calculates the simple moving average of the dictionary given in the
+        first argument using a window size given in the second argument and
+        returns it if possible.  For each key starting window length in until
+        the end, it calculates the simple moving average using window length of
+        previous data and adds it to a dictionary.  If the data dictionary is
+        empty; the window is less than or equal to zero; or the window is larger
+        than the number of elements in the original dictionary this function
+        returns None.
