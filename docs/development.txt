@@ -170,7 +170,7 @@ Documentation
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.       #
 ################################################################################
 
-- All source files must include docstrings for modules and functions:
+- All source files must include docstrings for modules, functions and classes
         - modules
         """
         String that describes what the module does.
@@ -211,3 +211,18 @@ Documentation
                         None:         description of conditions that have to be
                                       met
                 """
+        
+        - classes
+        class Cls:
+                """
+                String that describes what the class represents.
+
+                Attributes:
+                        var1 (str): descriptino of variable var1
+
+                        var2 (number): description of variable var2
+
+                Methods:
+                        func(a (int), b (str)) -> object: description of func()
+                """
+
