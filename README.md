@@ -28,15 +28,26 @@ technical analysis tools, trade history tools, and trading tools.
 ## Functionality
 
 ### Technical Analysis Tools
+Currently there are no tools that are written to completion.
 
 ### Trade History Tools
+Currently this functionality does not exist.
 
 ### Trading Tools
+Currently this functionality does not exist.
 
 
 ## Building
 
 ### Cloning PyBearBull From Git
+To clone this project via SSH, use one of the following:
+`git clone git@github.com:bl1nk1n/pybearbull.git`
+`git clone git@bitbucket.org:SamuelHentschel/pybearbull.git`
+`git clone git@gitlab.com:bl1nk1n/pybearbull.git`
+To clone this project via HTTPS, use one of the following:
+`git clone https://github.com/bl1nk1n/pybearbull.git`
+`git clone https://bl1nk1n@bitbucket.org/SamuelHentschel/pybearbull.git`
+`git clone https://gitlab.com/bl1nk1n/pybearbull.git`
 
 ### Virtual Environment
 To make sure you do not install any packages that might conflict with your
@@ -62,10 +73,10 @@ following: `$ deactivate`.  You should now be using your system's python
 packages again.
 
 ### Dependencies
-
+Currently there are no dependencies.
 
 ## Running
-
+Currently there is no way to run this project.
 
 ## Testing
 To run the tests, you need to install the following packages in addition to the
@@ -92,3 +103,4 @@ preferred as it needs to be done sooner or later.
 
 
 ## Libraries
+Currently none of the parts of this project have been split off into libraries.
