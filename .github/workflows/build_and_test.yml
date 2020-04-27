@@ -69,14 +69,8 @@ jobs:
     #       python-version: 3.6
 
 #    steps:
-    #pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-    - name: Testing with PyTest
+    - name: Testing, Checking Code Coverage, and Linting with PyTest
       run: |
         pip install pytest
         pip install pytest-cov
-        python -m pytest tests/ --junitxml=junit/test-results.xml --cov=pybearbull --cov-report=xml --cov-report=html
-
-    - name: Linting with PyTest
-      run: |
-        pip install pytest-flakes
-        python -m pytest --flakes
+        python -m pytest tests/ --cov=pybearbull/ --flakes
