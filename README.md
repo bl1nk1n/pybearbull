@@ -22,8 +22,8 @@ technical analysis tools, trade history tools, and trading tools.
 * [Testing](#testing)
 * [Contributing](#contributing)
 * [Libraries](#libraries)
-* [To Do](docs/TODO)
-* [Changelog](docs/CHANGELOG)
+* [TODO](docs/TODO)
+* [CHANGELOG](docs/CHANGELOG)
 
 ## Functionality
 

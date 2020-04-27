@@ -226,3 +226,13 @@ Documentation
                         func(a (int), b (str)) -> object: description of func()
                 """
 
+Release Steps
+--------------
+- create a new release branch from dev
+- update all the version numbers
+- document changes in the changelog
+- check documentation, testing, commenting, style, etc
+- review changes once more
+- merge with master
+- add tag at that commit for the version
+- make release on that tag

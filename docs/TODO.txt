@@ -1,0 +1,51 @@
+- connect to many different exchanges and brokers
+        - traditional financial (stocks, ETF, etc)
+                - td ameritrade
+                - charles schwab
+                - fidelity
+        - foreign currency exchanges
+        - cryptocurrency exchanges
+                - coinbase pro
+                - bittrex
+                - bitmex
+                - binance
+                - hitbtc
+- use the connections for public market data and private trading functions
+- provide a GUI for private trading history
+        - shows trade data log
+                - cryptocurrencies
+                        - date, exchange, trade ID, Type, Price, Fee, Exchange 
+                          Rate, Exchange Pair
+        - shows portfolio
+                - cryptocurrencies
+                        - currency, amount, price in USD, percentage of portfolio
+                        - piecharts of percentages of crypto portfolio
+                        - investment in, total fees, current value, gain/loss 
+                          USD and %
+        - can go to tabs for specific institutions or an overview of all
+                - overview
+                        - piechart percentage of portfolio based on instrument
+                        - picharte percentage of instrument portfolio based on
+                          institution
+                - institution
+                        - piechart percentage of institution portfolio based on 
+                          instruments
+        - GUI for previous trades overlay on top of historical data
+- provide a GUI for current market trends
+- provide a GUI/overlays for indicators and technical analysis
+- provide a GUI for tips and hints based on technical analysis (summary)
+        - chat style?
+        - SMS / email
+- provide a GUI for trading an instrument (pop up)
+        - picks the correct institution based on the instrument (if only one)
+          otherwise has you choose (hint at best one to diversify)
+
+- GUIs are configurable, can drag and drop, resize, pop out for multiple screens, etc
+
+- automated trading
+        - High frequency trading
+        - indicator based trading
+
+- server client architecture
+        - server always collecting data and doing calculations
+        - client just connecting to get a GUI
