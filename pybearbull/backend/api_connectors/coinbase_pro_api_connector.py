@@ -1,16 +1,4 @@
-#import requests
-
-# restful api endpoint = https://api.pro.coinbase.com
-
-# Status Codes:
-#   200     -   OK
-#   400     -   Bad Request: Invalid Request Format
-#   401     -   Unauthorized: Invalid API Key
-#   403     -   Forbidden: You do not have access to the requested resource
-#   404     -   Not Found
-#   429     -   Too Many Requests
-#   500     -   Internal Server Error: We had a problem with our server
-
+import requests
 # Pagination
 #   uses cursor pagination for all requests returning arrays
 #   allows for fetching results before and after the current page of results
@@ -40,133 +28,254 @@
 
 # TODO Private functions
 
-# Public functions:
-#   products:
-#       get products: get a list of currency pairs for trading
-#                     base_min_size and base_max_size define order restrictions
-#                     quote_increment is the min price and increment
-#           GET /products
-#           -------------
-#           [
-#               {
-#                   "id": "BTC-USD",
-#                   "base_currency": "BTC",
-#                   "quote_currency": "USD",
-#                   "base_min_size": "0.001",
-#                   "base_max_size": "10000.00",
-#                   "quote_increment": "0.01"
-#               }
-#           ]
-#       get product order book: get a list of open orders for a product
-#                               level param determines amount of detail
-#                                   1 only best bid and ask (default)
-#                                   2 top 50 bids and asks (aggregated)
-#                                   3 full order book (not aggregated)
-#           GET /products/<product_id>/book
-#           -------------------------------
-#           {
-#               "sequence": "3",
-#               "bids": [
-#                   [ price, size, num-orders ],
-#               ],
-#               "asks": [
-#                   [ price, size, num-orders ],
-#               ]
-#           }
-#           GET /products/<product_id>/book?level=3
-#           ---------------------------------------
-#           {
-#               "sequence": "3",
-#               "bids": [
-#                   [ price, size, order_id ],
-#                   [ "295.96","0.05088265","3b0f1225-7f84-490b-a29f-0faef9de823a" ],
-#                   ...
-#               ],
-#               "asks": [
-#                   [ price, size, order_id ],
-#                   [ "295.97","5.72036512","da863862-25f4-4868-ac41-005d11ab0a5f" ],
-#                   ...
-#               ]
-#           }
-#       get product ticker: snapshot of last trade (tick), best bid/ask, and 24h volume
-#           GET /products/<product_id>/ticker
-#           ---------------------------------
-#           {
-#             "trade_id": 4729088,
-#             "price": "333.99",
-#             "size": "0.193",
-#             "bid": "333.98",
-#             "ask": "333.99",
-#             "volume": "5957.11914015",
-#             "time": "2015-11-14T20:46:03.511254Z"
-#           }
-#       get trades: the latest trades for a product
-#                   this request is paginated; buy indicates downtick; sell
-#                   indicates uptick
-#           GET /products/<product_id>/trades
-#           ---------------------------------
-#           [{
-#               "time": "2014-11-07T22:19:28.578544Z",
-#               "trade_id": 74,
-#               "price": "10.00000000",
-#               "size": "0.01000000",
-#               "side": "buy"
-#           }, {
-#               "time": "2014-11-07T01:08:43.642366Z",
-#               "trade_id": 73,
-#               "price": "100.00000000",
-#               "size": "0.01000000",
-#               "side": "sell"
-#           }]
-#       get historic rates: returned in grouped buckets based on "granularity"
-#                           custom rate limit of 1 request per second, 2 requests
-#                           per second in bursts per IP
-#                           if start or end is not provided, both ignored
-#                           granularity must be {60, 300, 900, 3600, 21600, or 86400}
-#                                                1m, 5m,  15m, 1h,   6h,       1d
-#                           max response of 300 candles (if start and end will
-#                           cause more, it will be rejected)
-#               Parameters: start (ISO 8601)
-#                           end (ISO 8601)
-#                           granularity (in seconds)
-#           GET /products/<product_id>/candles
-#           ----------------------------------
-#           [
-#               [ time, low, high, open, close, volume ],
-#               [ 1415398768, 0.32, 4.2, 0.35, 4.2, 12.3 ],
-#               ...
-#           ]
-#       get 24h stats:  volume is in base currency, open high and low are in
-#                       quote currency
-#           GET /products/<product_id>/stats
-#           --------------------------------
-#           {
-#               "open": "6745.61000000",
-#               "high": "7292.11000000",
-#               "low": "6650.00000000",
-#               "volume": "26185.51325269",
-#               "last": "6813.19000000",
-#               "volume_30day": "1019451.11188405"
-#           }
-# currencies:
-#   get currencies: list known currencies
-#                   codes will conform to ISO 4217 whenever possible
-#       GET /currencies
-#       ---------------
-#       [{
-#           "id": "BTC",
-#           "name": "Bitcoin",
-#           "min_size": "0.00000001"
-#       }, {
-#           "id": "USD",
-#           "name": "United States Dollar",
-#           "min_size": "0.01000000"
-#       }]
-# time:
-#   get the server time:
-#       GET /time
-#       ---------
-#       {
-#           "iso": "2015-01-07T23:47:25.201Z",
-#           "epoch": 1420674445.201
-#       }
+class coinbase_pro_api_connector:
+    _restful_api_endpoint = "https://api.pro.coinbase.com"
+#    _status_codes = {200: "OK",
+#                     400: "Bad Request - Invalid Request Format",
+#                     401: "Unauthorized - Invalid API Key",
+#                     403: "Forbidden - You do not have access to the requested resource",
+#                     404: "Not Found",
+#                     429: "Too Many Requests",
+#                     500: "Internal Server Error - We had a problem with our server"}
+
+    def get_products(self):
+        """
+        Gets a list of currency pairs for trading from the Conbase Pro API.
+
+        Returns:
+            JSON Object:    If no errors happened, a list of dictionaries is
+                            returned: one for each currency pair.  Inside the 
+                            dictionaries are the keys: id, base_currency, 
+                            quote_currency, base_min_size, base_max_size, and 
+                            quote_increment.
+
+            None:           If errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        path = "/products"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    def get_product_order_book(self, product, level=1):
+        """
+        Gets the product's current order book from the Coinbase Pro API.
+
+        Parameters:
+            product (str):  The product ID of the cryptocurrency exchange.
+
+            level (int):    The verbosity that the result will be given in.
+                            If specified, must be between 1 and 3.
+
+        Returns:
+            JSON Object:    If no errors happened, a dictionary is returned:
+                            representing the product's order book.  Inside the 
+                            dictionary are three keys: sequence, bids, and 
+                            asks.  Both the bids' and asks' values are lists of
+                            bids and asks. If the level was set to 1 (default),
+                            then only the best bid and ask are returned.  If 
+                            the level was set to 2, the top 50 bids and asks 
+                            are returned (aggregated).  If the level was set to
+                            3, the full order book is returned (not 
+                            aggregated).  Each bid or ask entry contains: 
+                            price, size, and num-orders.  When using level 3
+                            the num-orders is exchanged for order_id (UUID).
+
+            None:           If product is not a string, level is not an
+                            integer, level is greater than 3, level is less
+                            than 1 or errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        if (not isinstance(product, str) or not isinstance(level, int) or
+                level > 3 or level < 1):
+            return None
+
+        path = "/products/" + product + "/book"
+        if (level > 1):
+            path += "?level=" + str(level)
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    def get_product_ticker(self, product):
+        """
+        Gets a snapshot of the product's last trade from the Coinbase Pro API.
+
+        Parameters:
+            product (str):  The product ID of the cryptocurrency exchange.
+
+        Returns:
+            JSON Object:    If no errors happened, a dictionary of ticker
+                            information is returned.  Inside the dictionary are
+                            the keys: trade_id, price, size, bid, ask, volume,
+                            and time.
+
+            None:           If product is not a string or errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        if (not isinstance(product, str)):
+            return None
+
+        path = "/products/" + product + "/ticker"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    # buy indicates downtick; sell indicates uptick
+    # this request is paginated...
+    def get_trades(self, product):
+        """
+        Get a product's latest trades from the Coinbase Pro API.
+
+        Parameters:
+            product (str):  The product ID of the cryptocurrency exchange.
+
+        Returns:
+            JSON Object:    If no errors happened, a list of dictionaries is
+                            returned: each of which is a recent trade.  Inside
+                            the dictionaries are the keys: time, trade_id, 
+                            price, size, and side.
+
+                None:       If product is not a string or errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        if (not isinstance(product, str)):
+            return None
+
+        path = "/products/" + product + "/trades"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    #custom rate limit of 1 request per second, 2 requests per second in
+    # bursts per IP
+    def get_historic_rates(self, product, granularity, start=None, end=None):
+        """
+        Get a product's historic rates from the Coinbase Pro API.
+
+        Parameters:
+            product (str):      The product ID of the cryptocurrency exchange.
+
+            granularity (int):  The granularity in seconds of each aggregation
+                                bucket.  Must be one of: 60, 300, 900, 3600,
+                                21600, or 86400 (1m, 5m, 15m, 1h, 6h, or 1d).
+
+            start (str):        The start time in ISO 8601 format.
+
+            end (str):          The end time in ISO 8601 format.
+
+        Returns:
+            JSON Object:    If no errors happened, a list of lists is returned:
+                            each of which a candle for an aggregation.  Inside 
+                            the lists are values for the time, low, high, open,
+                            close, and volume of each aggregation.
+
+                None:       If product is not a string, granularity is not one
+                            of the specified integers, the start time is not in
+                            ISO 8601 format, the end time is not in ISO 8601
+                            format, the number of candles between start and end
+                            is over 300, or errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        if (not isinstance(product, str) or not isinstance(granularity, int) or
+                (granularity not in [60, 300, 900, 3600, 21600, 86400])):
+            return None
+
+        if (start is None):
+            end = None
+        elif (end is None):
+            start = None
+        # else I need to check that they are both strings and in ISO 8601 format
+
+        # need to check that the number of intervals between start and end with
+        # the given granularity is less than 300 candles
+
+        path = "/products/" + product + "/candles?granularity=" + str(granularity)
+        if (start and end):
+            path += "&start=" + str(start) + "&end=" + str(end)
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    def get_24h_stats(self, product):
+        """
+        Get a product's 24 hour statistics from the Coinbase Pro API.
+
+        Parameters:
+            product (str):  The product ID of the cryptocurrency exchange.
+
+        Returns:
+            JSON Object:    If no errors happened, a dictionary is returned:
+                            representing a product's 24 hour statistics.
+                            Inside the dictionary are the keys: open, high,
+                            low, volume, last, and volume_30day.
+
+                None:       If product is not a string or errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        if (not isinstance(product, str)):
+            return None
+
+        path = "/products/" + product + "/stats"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    def get_currencies(self):
+        """
+        Get list of known currencies from the Coinbase Pro API.
+
+        Returns:
+            JSON Object:    If no errors happened, a list of dictionaries is
+                            returned: each dictionary represents a known
+                            currency.  Each dictionary contains the keys: id,
+                            name, and min_size.
+
+                None:       If errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        path = "/currencies"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
+
+    def get_time(self):
+        """
+        Get the API server time for the Coinbase Pro API.
+
+        Returns:
+            JSON Object:    If no errors happened, a dictionary is returned
+                            representing the current time on the API server.
+                            The dictionary contains the keys: iso and epoch.
+
+            None:           If errors happened.
+        """
+        # need to have custom exceptions and verbose printing here (add lib)
+        path = "/time"
+
+        r = requests.get(self._restful_api_endpoint + path)
+        if (r.status_code != 200):
+            return None
+
+        return r.json()
